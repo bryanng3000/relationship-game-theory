@@ -36,19 +36,42 @@ with st.sidebar:
     st.markdown("---")
     st.header("📚 Load Case / 加载案例")
     
-    # 案例库 (保持英文原文，因为训练数据是英文的，AI 能读懂)
+# -------------------------------------------------------
+    # 1. 案例库定义 (保持英文键名，方便索引)
+    # -------------------------------------------------------
     case_options = {
         "None (Custom Input)": "",
-        "1. The Bedroom Lock (Family Boundaries)": """My brother in-law (Sammy) lost his home and moved in with us along with his twin daughters. They have no respect for my daughter Zoey's privacy... (User installed lock, Wife is mad)""",
-        "2. The Medical Bill (Money vs. Face)": """My boyfriend went to the ER and got a $5000 bill. I offered to fight it... Result: Bill dropped to $26... Boyfriend is furious I 'harassed' them.""",
-        "3. The Vegan Daughter (Values Conflict)": """My 14-year-old daughter decided to go vegan... She exploded because I cooked bacon in a 'family pan'... She says dishwasher is contaminated."""
+        
+        # --- Reddit (Western Context) ---
+        "1. The Bedroom Lock (Family Boundaries)": "Reddit: Husband installed lock on daughter's door...",
+        "2. The Medical Bill (Money vs. Face)": "Reddit: Girlfriend negotiated hospital bill aggressively...",
+        "3. The Vegan Daughter (Values Conflict)": "Reddit: Vegan daughter mad at dad for cooking bacon...",
+        
+        # --- Zhihu (Chinese Context) ---
+        "4. 🇨🇳 [知乎] 彩礼博弈 (Bride Price Game)": "知乎: 女方要求涨彩礼至50万并买房...",
+        "5. 🇨🇳 [知乎] 婆媳边界 (In-law Boundary)": "知乎: 婆婆每天早上6点进房打扫...",
+        "6. 🇨🇳 [知乎] 扶弟魔 (Resource Allocation)": "知乎: 老公工资一半寄回老家养弟弟..."
     }
     
-    # 稍微恢复一下完整文本，方便演示效果
+    # -------------------------------------------------------
+    # 2. 完整故事映射 (这里存放真正的长文本)
+    # -------------------------------------------------------
     full_text_map = {
+        "None (Custom Input)": "",
+
+        # Reddit Cases
         "1. The Bedroom Lock (Family Boundaries)": """My brother in-law (Sammy) lost his home and moved in with us along with his twin daughters. They have no respect for my daughter Zoey's privacy and kept taking her things. Zoey bought a $60 makeup kit and one of the twins ruined it. My wife and Sammy saw no issue. I installed a lock on Zoey's door. My wife shamed me for putting a lock on Zoey's door, saying it prevents them from 'spending time' with her and implies we want to kick them out. She demanded I remove it, but I said the lock stays until they leave. Now everyone is giving me the silent treatment.""",
+        
         "2. The Medical Bill (Money vs. Face)": """My boyfriend went to the ER and got a $5000 bill. I offered to fight it. I went all-out: emailed the hospital board, investors, and management daily, pointing out their price gouging. Result: The bill was dropped to $26. I saved us nearly $5000. However, my boyfriend was furious. He looked at my emails and said I 'went too far' and 'harassed' the hospital. He said he authorized me to dispute the bill, not threaten the board. He is mad at me for being a hardass, even though I saved our holiday plans.""",
-        "3. The Vegan Daughter (Values Conflict)": """My 14-year-old daughter decided to go vegan. I supported her, bought her special food and pans. But recently, she exploded because I cooked bacon in a 'family pan' (not hers). She demanded I buy her separate pans, which I did. Now, she says the dishwasher is 'contaminated' and the fridge has 'bacon grease fingers' on it. She and my wife want me to completely stop cooking meat at home. I refused. I said I will not stop eating bacon in my own house. Now there is huge tension."""
+        
+        "3. The Vegan Daughter (Values Conflict)": """My 14-year-old daughter decided to go vegan. I supported her, bought her special food and pans. But recently, she exploded because I cooked bacon in a 'family pan' (not hers). She demanded I buy her separate pans, which I did. Now, she says the dishwasher is 'contaminated' and the fridge has 'bacon grease fingers' on it. She and my wife want me to completely stop cooking meat at home. I refused. I said I will not stop eating bacon in my own house. Now there is huge tension.""",
+
+        # Zhihu Cases (已修复标点符号)
+        "4. 🇨🇳 [知乎] 彩礼博弈 (Bride Price Game)": """我和女友谈了三年，感情一直很好。她是上海本地人，我是外地来的，好不容易在上海站稳脚跟。一开始，我们谈彩礼的时候，她家说二十万就行，象征一下。可是最近，她妈妈突然说，彩礼要涨到五十万，而且必须在上海内环买一套两居室的房子，房产证上要写她的名字。我现在的积蓄根本不够，就算加上父母的钱，也只能凑个首付。我问她，她说她也不想这样，但她妈妈坚持，说怕女儿以后吃苦。现在我压力巨大，感觉喘不过气。分手吧，三年感情舍不得；不分手吧，感觉自己要被掏空。各位大佬，我该怎么办？求支招！""",
+        
+        "5. 🇨🇳 [知乎] 婆媳边界 (In-law Boundary)": """结婚半年，我和老公住在公婆家。房子是他们买的，所以我也没说什么。但是，我婆婆每天早上六点准时进我房间打扫卫生！不管我睡没睡醒！有时候我周末想睡个懒觉都不行。而且，她每次打扫完都要阴阳怪气地说我懒，说我不会持家。我跟老公说了好几次，他总是说让我忍忍，说他妈就这样。我白天上班已经很累了，晚上还要面对婆婆的冷嘲热讽，感觉自己快要精神崩溃了。我真的想搬出去住，但是又怕伤了老公的心。难道我真的应该为了维持这段婚姻，继续忍受下去吗？求各位姐妹支招，我该如何委婉地让婆婆别再进我房间了？""",
+        
+        "6. 🇨🇳 [知乎] 扶弟魔 (Resource Allocation)": """我和老公结婚五年，他是典型的凤凰男，从小家里条件不好，靠自己努力考上了大学，在大城市扎根。我很欣赏他的努力和上进心。但是，结婚后我才发现，他每个月都要把工资的一半寄回老家，说是要给弟弟攒钱买房。他弟弟好吃懒做，整天游手好闲，根本没有工作的打算。我跟他说，我们也有自己的生活，以后还要养孩子，不能一直这样无底洞似的补贴他弟弟。但他总是说，他是家里的顶梁柱，不能不管弟弟。现在我们为了钱的事情经常吵架，我感觉我们的感情已经快要走到尽头了。难道嫁给凤凰男就注定要牺牲自己的生活，来成全他的家人吗？求各位大神指点，我该如何改变现状？"""
     }
     
     selected_case_label = st.selectbox("Select a scenario:", options=list(case_options.keys()))
